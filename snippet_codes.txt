@@ -1,0 +1,101 @@
+
+##Tootekoodi eemaldamine
+
+	add_filter( 'wc_product_sku_enabled', '__return_false' );
+
+##Kategooriate eemaldamine
+
+	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_meta', 40 );
+
+##Sorteerimise eemaldamine
+
+	remove_action( 'woocommerce_before_shop_loop' , 'woocommerce_result_count', 20 );
+	remove_action( 'woocommerce_before_shop_loop' , 'woocommerce_catalog_ordering', 30 );
+
+##Toote kirjelduse pealkiri
+
+	add_filter( 'woocommerce_product_description_heading', '__return_null' );
+
+##Toote lisainfo eemaldamine
+
+	add_filter( 'woocommerce_product_tabs', 'bbloomer_remove_product_tabs', 98 );
+	 
+	function bbloomer_remove_product_tabs( $tabs ) {
+		unset( $tabs['additional_information'] ); 
+		return $tabs;
+	}
+
+##Tellimuse aadressi eemaldamine
+
+	add_filter('woocommerce_billing_fields','wpb_custom_billing_fields');
+	// remove some fields from billing form
+	// ref - https://docs.woothemes.com/document/tutorial-customising-checkout-fields-using-actions-and-filters/
+	function wpb_custom_billing_fields( $fields = array() ) {
+		unset($fields['billing_company']);
+		unset($fields['billing_address_1']);
+		unset($fields['billing_address_2']);
+		unset($fields['billing_state']);
+		unset($fields['billing_city']);
+		unset($fields['billing_postcode']);
+		return $fields;
+	}
+
+##Jätka ostmist nupp
+
+	add_filter( 'woocommerce_continue_shopping_redirect', 'my_continue_shopping_redirect', PHP_INT_MAX );
+	function my_continue_shopping_redirect() {
+	  return 'https://www.esindus.ee/meened/';
+	}
+
+##Toote kirjelduse parem asukoht
+
+	remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_excerpt', 20 );
+	add_action( 'woocommerce_single_product_summary', 'the_content', 20 );
+
+##Toote kirjeldus
+
+	add_filter( 'woocommerce_product_tabs', 'yikes_remove_description_tab', 20, 1 );
+
+	function yikes_remove_description_tab( $tabs ) {
+
+		// Remove the description tab
+		if ( isset( $tabs['description'] ) ) unset( $tabs['description'] );      	    
+		return $tabs;
+	}
+
+##Suunab inglise poes ostes inglise ostukorvi
+
+	function my_custom_add_to_cart_redirect( $url ) {
+		
+		if ( ! isset( $_REQUEST['add-to-cart'] ) || ! is_numeric( $_REQUEST['add-to-cart'] ) ) {
+			return $url;
+		}
+		
+		$product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
+		
+		// ainult ingliskeelsed suunata cart lehele
+		if ( in_array( $product_id, array(5809, 6083, 6084) ) ) {
+			$url = "https://www.esindus.ee/en/cart/";
+		}
+		
+		return $url;
+	}
+	add_filter( 'woocommerce_add_to_cart_redirect', 'my_custom_add_to_cart_redirect' );
+
+##Suunab inglise ostukorvis edasi nupu vajutamisel inglise kassasse
+
+	add_filter('woocommerce_get_checkout_url', 'my_redirect_checkout');
+
+	function my_redirect_checkout($checkout_url) {
+		
+		if (strpos($_SERVER['REQUEST_URI'], "en") !== false){
+			global $woocommerce;
+			 $checkout_url = 'https://www.esindus.ee/en/checkout/';
+			 return  $checkout_url; 
+		}
+		else{
+			global $woocommerce;
+			$checkout_url = 'https://www.esindus.ee/kassa/';
+			return  $checkout_url; 
+		}
+	}
