@@ -1,4 +1,4 @@
-
+##PHP
 ##Tootekoodi eemaldamine
 
 	add_filter( 'wc_product_sku_enabled', '__return_false' );
@@ -40,7 +40,7 @@
 		return $fields;
 	}
 
-##Jätka ostmist nupp
+##JÃ¤tka ostmist nupp
 
 	add_filter( 'woocommerce_continue_shopping_redirect', 'my_continue_shopping_redirect', PHP_INT_MAX );
 	function my_continue_shopping_redirect() {
@@ -99,3 +99,32 @@
 			return  $checkout_url; 
 		}
 	}
+	
+	
+	
+	
+##CSS
+
+##Posted on eemaldamine
+.entry-meta .byline, .entry-meta .cat-links { display: none; }
+.entry-meta .posted-on { display: none; }
+
+##Next/Previous eemaldamine
+.nav-subtitle, .post-navigation .nav-links {
+display: none;
+}
+
+##Published eemaldamine
+.single .post-inner-content.secondary-content-box {
+  display: none;
+}
+
+##Store notice ekraani alaosas*/
+.woocommerce-store-notice.demo_store {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+		top: 90%;
+    background: rgba(0, 0, 0, 0.5);
+}
