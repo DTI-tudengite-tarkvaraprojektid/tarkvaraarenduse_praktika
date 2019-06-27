@@ -2,9 +2,6 @@
 
 ![E-pood](https://www.upload.ee/image/10119218/pilt1.png)
 
-![E-pood](https://www.upload.ee/image/10119233/pilt2.png)
-
-
 Digitehnoloogiate instituut: https://www.tlu.ee/dt
 Meie projekt on valminud Tallinna Ülikooli Digitehnoloogiate instituudi, informaatika eriala suvepraktika raames.
 
