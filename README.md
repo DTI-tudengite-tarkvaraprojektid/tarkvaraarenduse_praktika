@@ -19,7 +19,4 @@ PhP 5.6.4
 MariaDB 10.3
 
 
-Soovitused järgmisteks aastateks
-Soovitame kindlasti alustada varakult suhtlust kliendiga. Praktika algul tiimijuhil jagada konkreetsed ülesanded meeskonnakaaslastele ja vajadusel neid aidata/juhendada.
-
 www.esindus.ee/e-pood
